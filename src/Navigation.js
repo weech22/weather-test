@@ -15,6 +15,7 @@ const StyledNavLink = styled(NavLink)`
   padding: 10px;
   border-radius: 10px;
   margin: 0 10px;
+  color: black;
   &:active {
     color: black;
   }
