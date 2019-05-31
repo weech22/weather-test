@@ -1,46 +1,53 @@
 import React from 'react';
-import styled from 'styled-components';
 import { withCookies } from 'react-cookie';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import NoResults from '../NoResults';
 import CityList from '../CityList';
 import { Searchbar, PageWrap as Wrap } from '../styles';
-import { fetchCityList, apiSearch, emptyCityList } from '../actions';
+import {
+  fetchCityList as fetchCityListAction,
+  apiSearch as apiSearchAction,
+  emptyCityList as emptyCityListAction,
+} from '../actions';
 
 class Search extends React.Component {
-  componentDidUpdate(prevProps) {
-    const { searchTerm, fetchCityList, emptyCityList } = this.props;
-    if (prevProps.searchTerm !== '' && searchTerm === '') {
-      emptyCityList();
-    } else if (prevProps.searchTerm !== searchTerm) {
-      fetchCityList(searchTerm);
-    }
-  }
-
   componentDidMount = () => {
     const { apiSearch } = this.props;
-
     apiSearch('');
+  };
+
+  onKeyPress = (e) => {
+    const { searchTerm, fetchCityList, emptyCityList } = this.props;
+
+    if (e.key === 'Enter') {
+      if (searchTerm === '') {
+        emptyCityList();
+      } else {
+        fetchCityList(searchTerm);
+      }
+    }
   };
 
   onChange = (e) => {
     e.persist();
-
-    const { apiSearch } = this.props;
+    const { apiSearch, emptyCityList, searchTerm } = this.props;
+    if (searchTerm === '') {
+      emptyCityList();
+    }
 
     apiSearch(e.target.value);
   };
 
   render() {
     const { cityList, searchTerm } = this.props;
-    const { onChange } = this;
+    const { onChange, onKeyPress } = this;
 
     return (
       <Wrap>
-        <Searchbar onChange={onChange} placeholder="New York" />
+        <Searchbar onChange={onChange} placeholder="New York" onKeyPress={onKeyPress} />
         {cityList !== null && searchTerm !== '' && (
-          <CityList cityList={cityList} listType="searchResults" />
+          <CityList listofCities={cityList} listType="searchResults" />
         )}
         {searchTerm !== '' && cityList === null && <NoResults />}
       </Wrap>
@@ -57,6 +64,10 @@ export default compose(
   withCookies,
   connect(
     mapStateToProps,
-    { fetchCityList, apiSearch, emptyCityList },
+    {
+      fetchCityList: fetchCityListAction,
+      apiSearch: apiSearchAction,
+      emptyCityList: emptyCityListAction,
+    },
   ),
 )(Search);

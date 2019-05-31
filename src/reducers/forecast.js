@@ -5,14 +5,11 @@ const initialState = {
   woeid: '',
 };
 
-export default (state = initialState, action) => {
-  if (action.type === 'FETCH_FORECAST') {
-    return {
-      weatherByDays: action.payload.data.consolidated_weather,
-      region: action.payload.data.parent.title,
-      cityName: action.payload.data.title,
-      woeid: action.payload.data.woeid,
-    };
+export default (forecast = initialState, action) => (action.type === 'FETCH_FORECAST'
+  ? {
+    weatherByDays: action.response.data.consolidated_weather,
+    region: action.response.data.parent.title,
+    cityName: action.response.data.title,
+    woeid: action.response.data.woeid,
   }
-  return state;
-};
+  : forecast);

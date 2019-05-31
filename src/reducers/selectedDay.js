@@ -1,6 +1,1 @@
-export default (selectedDay = 0, action) => {
-  if (action.type === 'SELECT_DAY') {
-    return action.payload;
-  }
-  return selectedDay;
-};
+export default (selectedDay = 0, action) => (action.type === 'SELECT_DAY' ? action.day : selectedDay);

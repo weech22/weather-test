@@ -13,7 +13,7 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   font-size: 26px;
   padding: 10px;
-  border-radius: 10%;
+  border-radius: 10px;
   margin: 0 10px;
   &:active {
     color: black;
@@ -22,6 +22,7 @@ const StyledNavLink = styled(NavLink)`
     background: rgba(255, 255, 255, 0.4);
     box-shadow: 4px 2px 5px rgba(0, 0, 0, 0.2);
   }
+  transition: background 0.5s;
 `;
 
 const activeStyle = {

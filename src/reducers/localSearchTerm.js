@@ -1,6 +1,1 @@
-export default (searchTerm = '', action) => {
-  if (action.type === 'LOCAL_SEARCH') {
-    return action.payload;
-  }
-  return searchTerm;
-};
+export default (searchTerm = '', action) => (action.type === 'LOCAL_SEARCH' ? action.searchTerm : searchTerm);

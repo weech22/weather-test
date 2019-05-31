@@ -1,6 +1,1 @@
-export default (searchTerm = '', action) => {
-  if (action.type === 'API_SEARCH') {
-    return action.payload;
-  }
-  return searchTerm;
-};
+export default (searchTerm = [], action) => (action.type === 'API_SEARCH' ? action.searchTerm : searchTerm);

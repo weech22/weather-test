@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Day from '../Day';
 import { WeatherIcon, PageWrap, fadeIn } from '../styles';
 import { getDayOfWeek, imgUrl } from '../helper';
-import { selectDay, fetchForecast } from '../actions';
+import { selectDay as selectDayAction, fetchForecast as fetchForecastAction } from '../actions';
 import Preloader from '../Preloader';
 import '../preloader.css';
 
@@ -51,9 +51,8 @@ const DescriptionBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 40px;
+  justify-content: center;
 `;
-
-const DescriptionRow = styled.div``;
 
 const DayPicker = styled.div`
   display: flex;
@@ -89,19 +88,21 @@ const Temperature = styled.span`
 
 class Forecast extends React.Component {
   componentDidMount = () => {
-    this.props.fetchForecast(this.props.match.params.city);
-    const { selectDay } = this.props;
+    const { fetchForecast, match, selectDay } = this.props;
+    fetchForecast(match.params.city);
     selectDay(0);
   };
 
   render() {
     const {
-      weatherByDays, cityName, region, woeid,
-    } = this.props.forecast;
-    const { selectedDay, selectDay } = this.props;
+      selectedDay, selectDay, match, forecast,
+    } = this.props;
 
-    // substitute for city names
-    if (woeid == this.props.match.params.city) {
+    const {
+      weatherByDays, cityName, region, woeid,
+    } = forecast;
+
+    if (woeid === parseInt(match.params.city, 10)) {
       return (
         <PageWrap>
           <Wrap>
@@ -120,18 +121,18 @@ class Forecast extends React.Component {
                 <Temperature>{`${Math.round(weatherByDays[selectedDay].the_temp)}℃`}</Temperature>
               </TemperatureBlock>
               <DescriptionBlock>
-                <DescriptionRow>
+                <div>
                   <Caption>Pressure:</Caption>
                   <Value>{` ${Math.round(weatherByDays[selectedDay].air_pressure)} mbar`}</Value>
-                </DescriptionRow>
-                <DescriptionRow>
+                </div>
+                <div>
                   <Caption>Humidity:</Caption>
                   <Value>{` ${Math.round(weatherByDays[selectedDay].humidity)}%`}</Value>
-                </DescriptionRow>
-                <DescriptionRow>
+                </div>
+                <div>
                   <Caption>Wind speed:</Caption>
                   <Value>{` ${Math.round(weatherByDays[selectedDay].wind_speed)} mph`}</Value>
-                </DescriptionRow>
+                </div>
               </DescriptionBlock>
             </MainBlock>
             <DayPicker>
@@ -163,5 +164,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { selectDay, fetchForecast },
+  { selectDay: selectDayAction, fetchForecast: fetchForecastAction },
 )(Forecast);

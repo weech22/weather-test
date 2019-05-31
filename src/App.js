@@ -5,7 +5,7 @@ import { CookiesProvider, withCookies } from 'react-cookie';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { updateFavorites } from './actions';
+import { updateFavorites as updateFavoritesAction } from './actions';
 import Navigation from './Navigation';
 import Search from './Search';
 import Favorites from './Favorites';
@@ -61,6 +61,6 @@ export default compose(
   withCookies,
   connect(
     null,
-    { updateFavorites },
+    { updateFavorites: updateFavoritesAction },
   ),
 )(App);

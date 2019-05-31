@@ -1,12 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
 import { withCookies } from 'react-cookie';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import NoResults from '../NoResults';
 import CityList from '../CityList';
 import { Searchbar, PageWrap as Wrap } from '../styles';
-import { localSearch, localSearchResult } from '../actions';
+import {
+  localSearch as localSearchAction,
+  localSearchResult as localSearchResultAction,
+} from '../actions';
 
 class Favorites extends React.Component {
   componentDidUpdate(prevProps) {
@@ -32,7 +34,7 @@ class Favorites extends React.Component {
     return (
       <Wrap>
         <Searchbar onChange={this.onChange} placeholder="Berlin" />
-        <CityList cityList={listToDisplay} listType="favorites" />
+        <CityList listofCities={listToDisplay} listType="favorites" />
         {searchTerm !== '' && !searchResult.length && <NoResults />}
       </Wrap>
     );
@@ -49,6 +51,6 @@ export default compose(
   withCookies,
   connect(
     mapStateToProps,
-    { localSearch, localSearchResult },
+    { localSearch: localSearchAction, localSearchResult: localSearchResultAction },
   ),
 )(Favorites);

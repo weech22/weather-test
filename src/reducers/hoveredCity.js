@@ -1,9 +1,1 @@
-export default (hoveredCity = null, action) => {
-  switch (action.type) {
-    case 'HOVER_CITY':
-      return action.city;
-
-    default:
-      return hoveredCity;
-  }
-};
+export default (hoveredCity = null, action) => (action.type === 'HOVER_CITY' ? action.city : hoveredCity);

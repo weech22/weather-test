@@ -3,9 +3,8 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  parser: 'babel-eslint',
   extends: ['airbnb'],
-  plugins: ['prettier'],
+  parser: 'babel-eslint',
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/prop-types': 'off',

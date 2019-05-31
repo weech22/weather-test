@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import heartOn from './images/heart-on.svg';
 import heartOff from './images/heart-off.svg';
 import brokenHeart from './images/broken-heart.svg';
+import enter from './images/enter.png';
 
 export const WeatherIcon = styled.img`
   width: 100%;
@@ -18,7 +19,10 @@ export const Searchbar = styled.input`
   padding: 13px 30px 13px 19px;
   width: 350px;
   box-sizing: border-box;
-  background: white;
+  background-color: white;
+  background-image: url(${enter});
+  background-repeat: no-repeat;
+  background-position: 95% center;
   &::placeholder {
   }
   margin: 20px 0;
@@ -50,6 +54,10 @@ export const FavoriteButton = styled.button`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
+  &:visited {
+    color: black;
+  }
+  color: black;
 `;
 
 export const PageWrap = styled.div`
@@ -60,13 +68,13 @@ export const PageWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 export const fadeIn = keyframes`
 from {
   opacity: 0;
 }
-
 to {
   opacity: 1;
 }

@@ -8,7 +8,7 @@ const Wrap = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  border-radius: 10%;
+  border-radius: 10px;
   padding: ${props => (props.selected ? '5px 9px;' : '5px 10px;')};
   background: ${props => (props.selected ? 'rgba(255,255,255, 0.2)' : 'auto')};
   color: ${props => (props.selected ? '#ffffff' : 'black')};
@@ -30,25 +30,26 @@ const WeatherIconButton = styled(WeatherIcon)`
   margin: 8px 5px;
 `;
 
-const WeekDay = styled.span``;
+const WeekDay = styled.span`
+  font-size: 20px;
+`;
+
 const MinTemp = styled.span`
   margin-left: 8px;
+  font-size: 16px;
 `;
-const MaxTemp = styled.span``;
+
+const MaxTemp = styled.span`
+  font-size: 16px;
+`;
 
 export default ({ day, onClick, selected }) => (
   <Wrap onClick={onClick} selected={selected}>
     <WeekDay>{getShortDayOfWeek(new Date(day.applicable_date).getDay())}</WeekDay>
     <WeatherIconButton src={`${imgUrl}${day.weather_state_abbr}.svg`} />
     <Temperature>
-      <MaxTemp>
-        {Math.round(day.max_temp)}
-°
-      </MaxTemp>
-      <MinTemp>
-        {Math.round(day.min_temp)}
-°
-      </MinTemp>
+      <MaxTemp>{`${Math.round(day.max_temp)}°`}</MaxTemp>
+      <MinTemp>{`${Math.round(day.min_temp)}°`}</MinTemp>
     </Temperature>
   </Wrap>
 );

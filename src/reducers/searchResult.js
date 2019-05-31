@@ -1,12 +1,13 @@
 export default (searchResult = [], action) => {
-  if (action.type === 'FETCH_CITY_LIST') {
-    if (action.payload.data.length) {
-      return action.payload.data;
-    }
-    return null;
+  switch (action.type) {
+    case 'FETCH_CITY_LIST':
+      if (action.response.data.length) {
+        return action.response.data.sort((a, b) => a.title.localeCompare(b.title));
+      }
+      return null;
+    case 'EMPTY_CITY_LIST':
+      return [];
+    default:
+      return searchResult;
   }
-  if (action.type === 'EMPTY_CITY_LIST') {
-    return [];
-  }
-  return searchResult;
 };

@@ -2,37 +2,38 @@ import api from '../api';
 
 export const updateFavorites = favoriteList => ({
   type: 'UPDATE_FAVORITES',
-  payload: favoriteList,
+  favoriteList,
 });
 
 export const selectDay = day => ({
   type: 'SELECT_DAY',
-  payload: day,
+  day,
 });
 
 export const fetchForecast = cityId => async (dispatch) => {
   const response = await api.get(`${cityId}`);
-  dispatch({ type: 'FETCH_FORECAST', payload: response });
+  dispatch({ type: 'FETCH_FORECAST', response });
 };
 
 export const fetchCityList = searchTerm => async (dispatch) => {
   const response = await api.get(`/search/?query=${searchTerm}`);
-  dispatch({ type: 'FETCH_CITY_LIST', payload: response });
+  dispatch({ type: 'FETCH_CITY_LIST', response });
 };
 
 export const apiSearch = searchTerm => ({
   type: 'API_SEARCH',
-  payload: searchTerm,
+  searchTerm,
 });
 
 export const localSearch = searchTerm => ({
   type: 'LOCAL_SEARCH',
-  payload: searchTerm,
+  searchTerm,
 });
 
 export const localSearchResult = (favoriteList, searchTerm) => ({
   type: 'LOCAL_SEARCH_RESULT',
-  payload: { favoriteList, searchTerm },
+  favoriteList,
+  searchTerm,
 });
 
 export const emptyCityList = () => ({
