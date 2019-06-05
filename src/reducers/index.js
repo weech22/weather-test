@@ -1,20 +1,14 @@
 import { combineReducers } from 'redux';
 import favoriteList from './favoriteList';
-import selectedDay from './selectedDay';
 import forecast from './forecast';
-import localSearchTerm from './localSearchTerm';
-import apiSearchTerm from './apiSearchTerm';
-import searchResult from './searchResult';
-import localSearchResult from './localSearchResult';
+import apiSearch from './apiSearch';
+import localSearch from './localSearch';
 import hoveredCity from './hoveredCity';
 
 export default combineReducers({
   favoriteList,
-  searchResult,
-  localSearchResult,
-  apiSearchTerm,
-  localSearchTerm,
-  selectedDay,
+  apiSearch,
+  localSearch,
   forecast,
-  hoveredCity,
+  hoveredCity
 });
