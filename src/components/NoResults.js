@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import frown from './images/frown.svg';
+import frown from '../images/frown.svg';
 
 const Wrap = styled.div`
   display: flex;

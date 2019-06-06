@@ -1,6 +1,6 @@
 body {
   font-family: 'Cinzel', serif;
-  background: url('./images/weather.png');
+  background: url('../images/weather.png');
 }
 
 .enter {

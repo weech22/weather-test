@@ -1,9 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import heartOn from './images/heart-on.svg';
-import heartOff from './images/heart-off.svg';
-import brokenHeart from './images/broken-heart.svg';
-import enter from './images/enter.png';
+import heartOn from '../images/heart-on.svg';
+import heartOff from '../images/heart-off.svg';
+import brokenHeart from '../images/broken-heart.svg';
+import enter from '../images/enter.png';
 
 export const WeatherIcon = styled.img`
   width: 100%;
@@ -37,11 +37,13 @@ export const FavoriteButton = styled.button`
   top: 12px;
   right: 10px;
   cursor: pointer;
-  background-image: ${props => (props.isFavorite ? `url(${heartOn})` : `url(${heartOff})`)};
+  background-image: ${(props) =>
+    props.isFavorite ? `url(${heartOn})` : `url(${heartOff})`};
   &:hover {
-    background-image: ${props => (props.isFavorite && props.listType !== 'searchResults'
-    ? `url(${brokenHeart})`
-    : `url(${heartOn})`)};
+    background-image: ${(props) =>
+      props.isFavorite && props.listType !== 'searchResults'
+        ? `url(${brokenHeart})`
+        : `url(${heartOn})`};
   }
   &:disabled {
     cursor: default;
