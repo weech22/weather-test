@@ -1,1 +1,3 @@
-export default (hoveredCity = null, action) => (action.type === 'HOVER_CITY' ? action.city : hoveredCity);
+import { handleAction } from 'redux-actions';
+
+export default handleAction('HOVER_CITY', (state, action) => action.payload, null);

@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import Day from '../Day';
 import { WeatherIcon, PageWrap, fadeIn } from '../../styles';
 import { getDayOfWeek, imgUrl } from '../../utils/helper';
-import {
-  selectDay as selectDayAction,
-  fetchForecast as fetchForecastAction
-} from '../../actions';
+import { selectDay as selectDayAction, fetchForecast as fetchForecastAction } from '../../actions';
 import Preloader from '../Preloader';
 
 const Wrap = styled.div`
@@ -89,18 +86,16 @@ const Temperature = styled.span`
 `;
 
 const Forecast = ({
-  selectedDay,
-  forecast,
-  fetchForecast,
-  match,
-  selectDay
+  selectedDay, forecast, fetchForecast, match, selectDay,
 }) => {
   useEffect(() => {
     fetchForecast(match.params.city);
     selectDay(0);
   }, [match.params.city, selectDay, fetchForecast]);
 
-  const { weatherByDays, cityName, region, woeid } = forecast;
+  const {
+    weatherByDays, cityName, region, woeid,
+  } = forecast;
 
   if (woeid === parseInt(match.params.city, 10)) {
     return (
@@ -109,43 +104,27 @@ const Forecast = ({
           <Header>
             <CityName>{`${cityName}, ${region}`}</CityName>
             <HeaderCaption>
-              {getDayOfWeek(
-                new Date(weatherByDays[selectedDay].applicable_date).getDay()
-              )}
+              {getDayOfWeek(new Date(weatherByDays[selectedDay].applicable_date).getDay())}
             </HeaderCaption>
-            <HeaderCaption>
-              {weatherByDays[selectedDay].weather_state_name}
-            </HeaderCaption>
+            <HeaderCaption>{weatherByDays[selectedDay].weather_state_name}</HeaderCaption>
           </Header>
           <MainBlock>
             <TemperatureBlock>
-              <WeatherIcon
-                src={`${imgUrl}${
-                  weatherByDays[selectedDay].weather_state_abbr
-                }.svg`}
-              />
-              <Temperature>{`${Math.round(
-                weatherByDays[selectedDay].the_temp
-              )}℃`}</Temperature>
+              <WeatherIcon src={`${imgUrl}${weatherByDays[selectedDay].weather_state_abbr}.svg`} />
+              <Temperature>{`${Math.round(weatherByDays[selectedDay].the_temp)}℃`}</Temperature>
             </TemperatureBlock>
             <DescriptionBlock>
               <div>
                 <Caption>Pressure:</Caption>
-                <Value>{` ${Math.round(
-                  weatherByDays[selectedDay].air_pressure
-                )} mbar`}</Value>
+                <Value>{` ${Math.round(weatherByDays[selectedDay].air_pressure)} mbar`}</Value>
               </div>
               <div>
                 <Caption>Humidity:</Caption>
-                <Value>{` ${Math.round(
-                  weatherByDays[selectedDay].humidity
-                )}%`}</Value>
+                <Value>{` ${Math.round(weatherByDays[selectedDay].humidity)}%`}</Value>
               </div>
               <div>
                 <Caption>Wind speed:</Caption>
-                <Value>{` ${Math.round(
-                  weatherByDays[selectedDay].wind_speed
-                )} mph`}</Value>
+                <Value>{` ${Math.round(weatherByDays[selectedDay].wind_speed)} mph`}</Value>
               </div>
             </DescriptionBlock>
           </MainBlock>
@@ -170,12 +149,12 @@ const Forecast = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   selectedDay: state.forecast.selectedDay,
-  forecast: state.forecast.forecastData
+  forecast: state.forecast.forecastData,
 });
 
 export default connect(
   mapStateToProps,
-  { selectDay: selectDayAction, fetchForecast: fetchForecastAction }
+  { selectDay: selectDayAction, fetchForecast: fetchForecastAction },
 )(Forecast);

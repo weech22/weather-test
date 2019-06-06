@@ -1,3 +1,7 @@
-export default (currentList = [], action) => (action.type === 'UPDATE_FAVORITES'
-  ? action.favoriteList.sort((a, b) => a.title.localeCompare(b.title))
-  : currentList);
+import { handleAction } from 'redux-actions';
+
+export default handleAction(
+  'UPDATE_FAVORITES',
+  (state, action) => action.payload.sort((a, b) => a.title.localeCompare(b.title)),
+  [],
+);

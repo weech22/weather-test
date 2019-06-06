@@ -1,4 +1,3 @@
-export const updateFavorites = (favoriteList) => ({
-  type: 'UPDATE_FAVORITES',
-  favoriteList
-});
+import { createAction } from 'redux-actions';
+
+export const updateFavorites = createAction('UPDATE_FAVORITES');

@@ -1,1 +1,3 @@
-export default (selectedDay = 0, action) => (action.type === 'SELECT_DAY' ? action.day : selectedDay);
+import { handleAction } from 'redux-actions';
+
+export default handleAction('SELECT_DAY', (state, action) => action.payload, 0);

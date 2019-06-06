@@ -1,10 +1,7 @@
-export const localSearch = (searchTerm) => ({
-  type: 'LOCAL_SEARCH',
-  searchTerm
-});
+import { createAction } from 'redux-actions';
 
-export const localSearchResult = (favoriteList, searchTerm) => ({
-  type: 'LOCAL_SEARCH_RESULT',
-  favoriteList,
-  searchTerm
-});
+export const localSearch = createAction('LOCAL_SEARCH');
+export const localSearchResult = createAction(
+  'LOCAL_SEARCH_RESULT',
+  (favoriteList, searchTerm) => ({ favoriteList, searchTerm }),
+);

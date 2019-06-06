@@ -1,1 +1,3 @@
-export default (searchTerm = [], action) => (action.type === 'API_SEARCH' ? action.searchTerm : searchTerm);
+import { handleAction } from 'redux-actions';
+
+export default handleAction('API_SEARCH', (state, action) => action.payload, []);

@@ -1,8 +1,4 @@
-export const emptyCityList = () => ({
-  type: 'EMPTY_CITY_LIST'
-});
+import { createAction } from 'redux-actions';
 
-export const hoverCity = (city) => ({
-  type: 'HOVER_CITY',
-  city
-});
+export const emptyCityList = createAction('EMPTY_CITY_LIST');
+export const hoverCity = createAction('HOVER_CITY');
