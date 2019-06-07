@@ -4,11 +4,9 @@ import { withCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import * as R from 'ramda';
 import { FavoriteButton, fadeIn } from '../styles';
-import {
-  updateFavorites as updateFavoritesAction,
-  hoverCity as hoverCityAction
-} from '../actions';
+import { updateFavorites as updateFavoritesAction, hoverCity as hoverCityAction } from '../actions';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -29,8 +27,8 @@ const CityName = styled.span`
 const ListItem = styled.li`
   border: none;
   position: relative;
-  background: ${(props) => (props.index % 2 === 0 ? '#fff2bc' : '#ffd0bc')};
-  background: ${(props) => (props.isHovered ? '#8ed3e9' : 'auto')};
+  background: ${props => (props.index % 2 === 0 ? '#fff2bc' : '#ffd0bc')};
+  background: ${props => (props.isHovered ? '#8ed3e9' : 'auto')};
   transition: background 1s;
   border-radius: 10px;
   padding: 10px 50px;
@@ -49,18 +47,12 @@ const CityList = styled.ul`
 `;
 
 const cityList = ({
-  listofCities,
-  cookies,
-  updateFavorites,
-  listType,
-  hoverCity,
-  hoveredCity
+  listofCities, cookies, updateFavorites, listType, hoverCity, hoveredCity,
 }) => {
-  const isFavorite = (favoriteCookie, city) =>
-    favoriteCookie
-      .get('weather_favorite')
-      .map((town) => town.woeid)
-      .indexOf(city.woeid) !== -1;
+  // const isFavorite = (favoriteCookie, city) => favoriteCookie.get('weather_favorite').map(town => town.woeid).indexOf(city.woeid) !== -1;
+
+  const isFavorite = (favoriteCookie, city) => R.indexOf(city.woeid, R.map(town => town.woeid, favoriteCookie.get('weather_favorite')))
+    !== -1;
 
   const onClick = (favoriteCookie, city) => {
     const favorites = favoriteCookie.get('weather_favorite');
@@ -68,28 +60,24 @@ const cityList = ({
     if (isFavorite(cookies, city)) {
       favoriteCookie.set(
         'weather_favorite',
-        favorites.filter((town) => town.woeid !== city.woeid),
+        favorites.filter(town => town.woeid !== city.woeid),
         {
-          path: '/'
-        }
+          path: '/',
+        },
       );
     } else {
       favoriteCookie.set('weather_favorite', [...favorites, city], {
-        path: '/'
+        path: '/',
       });
     }
 
-    updateFavorites(favoriteCookie.get('weather_favorite'));
+    updateFavorites(cookies.get('weather_favorite'));
   };
 
   return (
     <CityList>
       {listofCities.map((city, i) => (
-        <ListItem
-          key={city.woeid}
-          index={i}
-          isHovered={hoveredCity === city.woeid}
-        >
+        <ListItem key={city.woeid} index={i} isHovered={hoveredCity === city.woeid}>
           <StyledLink to={`forecast/${city.woeid}`}>
             <CityName
               onMouseEnter={() => hoverCity(city.woeid)}
@@ -110,14 +98,12 @@ const cityList = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  hoveredCity: state.hoveredCity
-});
+const mapStateToProps = state => R.pick(['hoveredCity'], state);
 
 export default compose(
   withCookies,
   connect(
     mapStateToProps,
-    { updateFavorites: updateFavoritesAction, hoverCity: hoverCityAction }
-  )
+    { updateFavorites: updateFavoritesAction, hoverCity: hoverCityAction },
+  ),
 )(cityList);

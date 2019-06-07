@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import * as R from 'ramda';
 import Day from '../Day';
 import { WeatherIcon, PageWrap, fadeIn } from '../../styles';
 import { getDayOfWeek, imgUrl } from '../../utils/helper';
@@ -150,8 +151,8 @@ const Forecast = ({
 };
 
 const mapStateToProps = state => ({
-  selectedDay: state.forecast.selectedDay,
-  forecast: state.forecast.forecastData,
+  selectedDay: R.path(['forecast', 'selectedDay'], state),
+  forecast: R.path(['forecast', 'forecastData'], state),
 });
 
 export default connect(

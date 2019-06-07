@@ -2,20 +2,17 @@ import React, { useEffect } from 'react';
 import { withCookies } from 'react-cookie';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import * as R from 'ramda';
 import NoResults from '../NoResults';
 import CityList from '../CityList';
 import { Searchbar, PageWrap as Wrap } from '../../styles';
 import {
   localSearch as localSearchAction,
-  localSearchResult as localSearchResultAction
+  localSearchResult as localSearchResultAction,
 } from '../../actions';
 
 const Favorites = ({
-  favoriteList,
-  searchResult,
-  searchTerm,
-  localSearch,
-  localSearchResult
+  favoriteList, searchResult, searchTerm, localSearch, localSearchResult,
 }) => {
   useEffect(() => {
     localSearchResult(favoriteList, searchTerm);
@@ -40,10 +37,10 @@ const Favorites = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  favoriteList: state.favoriteList,
-  searchResult: state.localSearch.searchResult,
-  searchTerm: state.localSearch.searchTerm
+const mapStateToProps = state => ({
+  favoriteList: R.path(['favoriteList'], state),
+  searchResult: R.path(['localSearch', 'searchResult'], state),
+  searchTerm: R.path(['localSearch', 'searchTerm'], state),
 });
 
 export default compose(
@@ -52,7 +49,7 @@ export default compose(
     mapStateToProps,
     {
       localSearch: localSearchAction,
-      localSearchResult: localSearchResultAction
-    }
-  )
+      localSearchResult: localSearchResultAction,
+    },
+  ),
 )(Favorites);

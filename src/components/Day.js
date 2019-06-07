@@ -9,17 +9,14 @@ const Wrap = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: 10px;
-  padding: ${(props) => (props.selected ? '5px 9px;' : '5px 10px;')};
-  background: ${(props) =>
-    props.selected ? 'rgba(255,255,255, 0.2)' : 'auto'};
-  color: ${(props) => (props.selected ? '#ffffff' : 'black')};
-  font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
-  box-shadow: ${(props) =>
-    props.selected ? '4px 2px 5px rgba(0, 0, 0, 0.5)' : '0'};
+  padding: ${props => (props.selected ? '5px 9px;' : '5px 10px;')};
+  background: ${props => (props.selected ? 'rgba(255,255,255, 0.2)' : 'auto')};
+  color: ${props => (props.selected ? '#ffffff' : 'black')};
+  font-weight: ${props => (props.selected ? 'bold' : 'normal')};
+  box-shadow: ${props => (props.selected ? '4px 2px 5px rgba(0, 0, 0, 0.5)' : '0')};
   &:hover {
-    background: ${(props) => (!props.selected ? 'rgba(0,0,0, 0.1)' : 'auto')};
-    box-shadow: ${(props) =>
-      !props.selected ? '4px 2px 5px rgba(0, 0, 0, 0.2)' : '0'};
+    background: ${props => (!props.selected ? 'rgba(0,0,0, 0.1)' : 'auto')};
+    box-shadow: ${props => (!props.selected ? '4px 2px 5px rgba(0, 0, 0, 0.2)' : '0')};
   }
 `;
 
@@ -48,9 +45,7 @@ const MaxTemp = styled.span`
 
 export default ({ day, onClick, selected }) => (
   <Wrap onClick={onClick} selected={selected}>
-    <WeekDay>
-      {getShortDayOfWeek(new Date(day.applicable_date).getDay())}
-    </WeekDay>
+    <WeekDay>{getShortDayOfWeek(new Date(day.applicable_date).getDay())}</WeekDay>
     <WeatherIconButton src={`${imgUrl}${day.weather_state_abbr}.svg`} />
     <Temperature>
       <MaxTemp>{`${Math.round(day.max_temp)}°`}</MaxTemp>

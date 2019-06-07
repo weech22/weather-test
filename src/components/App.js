@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { CookiesProvider, withCookies } from 'react-cookie';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import * as R from 'ramda';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { updateFavorites as updateFavoritesAction } from '../actions';
 import Navigation from './Navigation';
@@ -27,7 +28,8 @@ const App = ({ cookies, updateFavorites }) => {
         cookies.set('weather_favorite', [], { path: '/' });
       }
 
-      updateFavorites(cookies.get('weather_favorite'));
+      // updateFavorites(cookies.get('weather_favorite'));
+      R.compose(updateFavorites)(cookies.get('weather_favorite'));
     };
     onMount();
   }, [cookies, updateFavorites]);
@@ -60,6 +62,6 @@ export default compose(
   withCookies,
   connect(
     null,
-    { updateFavorites: updateFavoritesAction }
-  )
+    { updateFavorites: updateFavoritesAction },
+  ),
 )(App);

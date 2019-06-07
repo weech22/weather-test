@@ -2,21 +2,18 @@ import React, { useEffect } from 'react';
 import { withCookies } from 'react-cookie';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import * as R from 'ramda';
 import NoResults from '../NoResults';
 import CityList from '../CityList';
 import { Searchbar, PageWrap as Wrap } from '../../styles';
 import {
   fetchCityList as fetchCityListAction,
   apiSearch as apiSearchAction,
-  emptyCityList as emptyCityListAction
+  emptyCityList as emptyCityListAction,
 } from '../../actions';
 
 const Search = ({
-  fetchCityList,
-  apiSearch,
-  cityList,
-  emptyCityList,
-  searchTerm
+  fetchCityList, apiSearch, cityList, emptyCityList, searchTerm,
 }) => {
   useEffect(() => {
     apiSearch('');
@@ -44,11 +41,7 @@ const Search = ({
 
   return (
     <Wrap>
-      <Searchbar
-        onChange={onChange}
-        placeholder="New York"
-        onKeyPress={onKeyPress}
-      />
+      <Searchbar onChange={onChange} placeholder="New York" onKeyPress={onKeyPress} />
       {cityList !== null && searchTerm !== '' && (
         <CityList listofCities={cityList} listType="searchResults" />
       )}
@@ -57,9 +50,9 @@ const Search = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  cityList: state.apiSearch.searchResult,
-  searchTerm: state.apiSearch.searchTerm
+const mapStateToProps = state => ({
+  cityList: R.path(['apiSearch', 'searchResult'], state),
+  searchTerm: R.path(['apiSearch', 'searchTerm'], state),
 });
 
 export default compose(
@@ -69,7 +62,7 @@ export default compose(
     {
       fetchCityList: fetchCityListAction,
       apiSearch: apiSearchAction,
-      emptyCityList: emptyCityListAction
-    }
-  )
+      emptyCityList: emptyCityListAction,
+    },
+  ),
 )(Search);
